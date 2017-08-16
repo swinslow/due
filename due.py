@@ -39,6 +39,13 @@ def main(todo_file, future_days = 0):
                     due_today.append(str(i+1).zfill(2) + " " + task)
                 elif date < datetime.today().date() + timedelta(days=future_days+1):
                     due_future.append(str(i+1).zfill(2) + " " + task)
+            # if no date match, look for relative keywords
+            elif "due:today" in task:
+                due_today.append(str(i+1).zfill(2) + " " + task)
+            elif "due:tomorrow" in task and future_days > 0:
+                due_future.append(str(i+1).zfill(2) + " " + task)
+            elif "due:yesterday" in task:
+                overdue.append(str(i+1).zfill(2) + " " + task)
 
     # Print to console
     if len(overdue) > 0:
